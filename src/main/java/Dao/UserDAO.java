@@ -7,9 +7,26 @@ import java.util.List;
 
 public class UserDAO {
 
+    private static Connection connection;
+
+    public static Connection getConnection() {
+        if(connection == null){
+            connection = getMysqlConnection();
+        }
+        return connection;
+    }
+
+    private static UserDAO userDAO;
+
+    public static UserDAO getUserDAO(){
+        if(userDAO == null){
+            userDAO = new UserDAO();
+        }
+        return userDAO;
+    }
+
     public void addUser(User user) throws SQLException {
-        try (Connection connection = getMysqlConnection();
-             PreparedStatement preparedStatement = connection.
+        try (PreparedStatement preparedStatement = getConnection().
                      prepareStatement("INSERT INTO users" + "(name, email, country) VALUES" + "(?, ?, ?)")) {
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getEmail());
@@ -22,8 +39,8 @@ public class UserDAO {
 
     public boolean updateUser(User user) throws SQLException {
         boolean rowUpdated;
-        try (Connection connection = getMysqlConnection();
-             PreparedStatement statement = connection.prepareStatement("update users set name = ?,email= ?, country =? where id = ?")) {
+        try (PreparedStatement statement = getConnection().
+                prepareStatement("update users set name = ?,email= ?, country =? where id = ?")) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getCountry());
@@ -36,8 +53,7 @@ public class UserDAO {
 
     public User getUserById(int id) {
         User user = null;
-        try (Connection connection = getMysqlConnection();
-             PreparedStatement preparedStatement = connection.
+        try (PreparedStatement preparedStatement = getConnection().
                      prepareStatement("SELECT name, email, country FROM users WHERE id = ?")) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -56,8 +72,7 @@ public class UserDAO {
 
     public List< User > getAllUsers() {
         List< User > list = new ArrayList< User >();
-        try (Connection connection = getMysqlConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users")) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("SELECT * FROM users")) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -75,8 +90,7 @@ public class UserDAO {
 
     public boolean deleteUser(int id) throws SQLException {
         boolean usersDeleted;
-        try (Connection connection = getMysqlConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement("DELETE FROM users WHERE id = ?")) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
             usersDeleted = preparedStatement.executeUpdate() > 0;
