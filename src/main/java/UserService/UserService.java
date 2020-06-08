@@ -1,9 +1,7 @@
 package UserService;
 
 import Dao.UserDAO;
-import ModelServlet.UtilServlet;
 import User.User;
-
 import java.sql.SQLException;
 import java.util.List;
 

@@ -5,11 +5,11 @@ import UserService.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
+import java.io.IOException;
 
 public class UtilServlet {
 
