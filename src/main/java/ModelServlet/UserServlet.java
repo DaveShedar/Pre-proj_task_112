@@ -13,12 +13,6 @@ import java.sql.SQLException;
 @WebServlet(value = "/")
 public class UserServlet extends HttpServlet {
 
-    private UserDAO userDAO;
-
-    public void init() {
-        userDAO = new UserDAO();
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);

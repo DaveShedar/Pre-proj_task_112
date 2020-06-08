@@ -22,14 +22,14 @@ public class UtilServlet {
         return utilServlet;
     }
 
-    void listUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void listUsers(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List< User > listUsers = UserService.getUserService().getAllUsers();
         req.setAttribute("listUsers", listUsers);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("user-list.jsp");
         requestDispatcher.forward(req, resp);
     }
 
-    void updateUser(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+    protected void updateUser(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         String name = req.getParameter("name");
         String email = req.getParameter("email");
@@ -39,13 +39,13 @@ public class UtilServlet {
         resp.sendRedirect("list");
     }
 
-    void deleteUser(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+    protected void deleteUser(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         UserService.getUserService().deleteUser(id);
         resp.sendRedirect("list");
     }
 
-    void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    protected void showEditForm(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         int id = Integer.parseInt(req.getParameter("id"));
         User existingUser = UserService.getUserService().getUserById(id);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("user-form.jsp");
@@ -53,12 +53,12 @@ public class UtilServlet {
         requestDispatcher.forward(req, resp);
     }
 
-    void showNewForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void showNewForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("user-form.jsp");
         requestDispatcher.forward(req, resp);
     }
 
-    void addUser(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+    protected void addUser(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String country = req.getParameter("country");

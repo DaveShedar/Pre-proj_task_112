@@ -9,7 +9,7 @@ public class UserDAO {
 
     private static Connection connection;
 
-    public static Connection getConnection() {
+    protected static Connection getConnection() {
         if(connection == null){
             connection = getMysqlConnection();
         }
